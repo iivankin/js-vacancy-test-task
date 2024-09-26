@@ -8,17 +8,16 @@ import { DATABASE_DOCUMENTS } from 'app-constants';
 import { tokenSchema } from 'schemas';
 import { Token, TokenType } from 'types';
 
-type TokenPayload = Pick<Token, 'userId' | 'isShadow'> & { tokenType: TokenType };
+type TokenPayload = Pick<Token, 'userId'> & { tokenType: TokenType };
 
 const service = db.createService<Token>(DATABASE_DOCUMENTS.TOKENS, {
   schemaValidator: (obj) => tokenSchema.parseAsync(obj),
 });
 
-const createToken = async (userId: string, type: TokenType, isShadow?: boolean) => {
+const createToken = async (userId: string, type: TokenType) => {
   const payload: TokenPayload = {
     tokenType: type,
     userId,
-    isShadow: isShadow || null,
   };
 
   const value = await securityUtil.generateJwtToken<TokenPayload>(payload);
@@ -27,12 +26,11 @@ const createToken = async (userId: string, type: TokenType, isShadow?: boolean) 
     type,
     value,
     userId,
-    isShadow: isShadow || null,
   });
 };
 
-const createAuthTokens = async ({ userId, isShadow }: { userId: string; isShadow?: boolean }) => {
-  const accessTokenEntity = await createToken(userId, TokenType.ACCESS, isShadow);
+const createAuthTokens = async ({ userId }: { userId: string; }) => {
+  const accessTokenEntity = await createToken(userId, TokenType.ACCESS);
 
   return {
     accessToken: accessTokenEntity.value,

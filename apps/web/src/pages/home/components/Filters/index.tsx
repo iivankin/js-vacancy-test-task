@@ -1,100 +1,107 @@
-import React, { FC, useLayoutEffect, useState } from 'react';
-import { ActionIcon, ComboboxItem, Group, Select, TextInput } from '@mantine/core';
-import { DatePickerInput, DatesRangeValue } from '@mantine/dates';
-import { useDebouncedValue, useInputState, useSetState } from '@mantine/hooks';
-import { IconSearch, IconSelector, IconX } from '@tabler/icons-react';
-import { set } from 'lodash';
+import React, { FC, useLayoutEffect } from 'react';
+import { ActionIcon, Badge, Box, ComboboxItem, Group, Select, Stack, Text, TextInput } from '@mantine/core';
+import { useDebouncedValue, useInputState } from '@mantine/hooks';
+import { IconSearch, IconX } from '@tabler/icons-react';
 
-import { UsersListParams } from 'resources/user';
+import { ArrowDownIcon, SwapIcon, XCircleIcon } from 'public/icons';
+
+import { PaginationSchema } from 'types';
+
+import classes from './style.module.css';
 
 const selectOptions: ComboboxItem[] = [
   {
-    value: 'newest',
-    label: 'Newest',
+    value: 'desc',
+    label: 'Sort by newest',
   },
   {
-    value: 'oldest',
-    label: 'Oldest',
+    value: 'asc',
+    label: 'Sort by oldest',
   },
 ];
 
 interface FiltersProps {
-  setParams: ReturnType<typeof useSetState<UsersListParams>>[1];
+  params: PaginationSchema;
+  setParams: (newValue: PaginationSchema) => void;
+  onReset: () => void;
+  recordCount?: number;
 }
 
-const Filters: FC<FiltersProps> = ({ setParams }) => {
+const Filters: FC<FiltersProps> = ({ recordCount, params, setParams, onReset }) => {
   const [search, setSearch] = useInputState('');
-  const [sortBy, setSortBy] = useState<string | null>(selectOptions[0].value);
-  const [filterDate, setFilterDate] = useState<DatesRangeValue>();
 
   const [debouncedSearch] = useDebouncedValue(search, 500);
 
   const handleSort = (value: string | null) => {
-    setSortBy(value);
-
-    setParams((old) => set(old, 'sort.createdOn', value === 'newest' ? 'desc' : 'asc'));
-  };
-
-  const handleFilter = ([startDate, endDate]: DatesRangeValue) => {
-    setFilterDate([startDate, endDate]);
-
-    if (!startDate) {
-      setParams({ filter: undefined });
-    }
-
-    if (endDate) {
-      setParams({
-        filter: {
-          createdOn: { startDate, endDate },
-        },
-      });
-    }
+    setParams({ ...params, sort: value as PaginationSchema['sort'] });
   };
 
   useLayoutEffect(() => {
-    setParams({ searchValue: debouncedSearch });
+    setParams({ ...params, searchName: debouncedSearch });
   }, [debouncedSearch]);
 
   return (
-    <Group wrap="nowrap" justify="space-between">
-      <Group wrap="nowrap">
-        <TextInput
-          w={350}
-          size="md"
-          value={search}
-          onChange={setSearch}
-          placeholder="Search by name or email"
-          leftSection={<IconSearch size={16} />}
-          rightSection={
-            search && (
-              <ActionIcon variant="transparent" onClick={() => setSearch('')}>
-                <IconX color="gray" stroke={1} />
-              </ActionIcon>
-            )
-          }
-        />
+    <>
+      <TextInput
+        w="100%"
+        value={search}
+        onChange={setSearch}
+        placeholder="Type to search..."
+        leftSection={<IconSearch size={16} />}
+        rightSection={
+          search && (
+            <ActionIcon variant="transparent" onClick={() => setSearch('')}>
+              <IconX color="gray" stroke={1} />
+            </ActionIcon>
+          )
+        }
+        classNames={{
+          input: classes.search,
+        }}
+      />
 
-        <Select
-          w={200}
-          size="md"
-          data={selectOptions}
-          value={sortBy}
-          onChange={handleSort}
-          allowDeselect={false}
-          rightSection={<IconSelector size={16} />}
-          comboboxProps={{
-            withinPortal: false,
-            transitionProps: {
-              transition: 'fade',
-              duration: 120,
-              timingFunction: 'ease-out',
-            },
-          }}
-        />
-
-        <DatePickerInput type="range" size="md" placeholder="Pick date" value={filterDate} onChange={handleFilter} />
-      </Group>
-    </Group>
+      <Stack gap={12}>
+        <Group justify="space-between">
+          {recordCount || recordCount === 0 ? (
+            <Text size="md" lh="19px" c="black-600" fw="bold">
+              {recordCount} results
+            </Text>
+          ) : (
+            <Box w={1} h={1} />
+          )}
+          <Select
+            size="md"
+            data={selectOptions}
+            value={params.sort}
+            onChange={handleSort}
+            allowDeselect={false}
+            leftSection={<SwapIcon />}
+            rightSection={<ArrowDownIcon />}
+            comboboxProps={{
+              withinPortal: false,
+              transitionProps: {
+                transition: 'fade',
+                duration: 120,
+                timingFunction: 'ease-out',
+              },
+            }}
+          />
+        </Group>
+        {params.searchPrice && (
+          <Badge
+            fw="500"
+            rightSection={
+              <button type="button" onClick={onReset} className={classes.button}>
+                <XCircleIcon />
+              </button>
+            }
+            className={classes.badge}
+          >
+            ${params.searchPrice.from}-${params.searchPrice.to}
+          </Badge>
+        )}
+      </Stack>
+    </>
   );
 };
 export default Filters;

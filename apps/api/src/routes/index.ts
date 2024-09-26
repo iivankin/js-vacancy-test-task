@@ -5,7 +5,6 @@ import attachCustomProperties from './middlewares/attach-custom-properties.middl
 import extractTokens from './middlewares/extract-tokens.middleware';
 import routeErrorHandler from './middlewares/route-error-handler.middleware';
 import tryToAttachUser from './middlewares/try-to-attach-user.middleware';
-import adminRoutes from './admin.routes';
 import privateRoutes from './private.routes';
 import publicRoutes from './public.routes';
 
@@ -18,7 +17,6 @@ const defineRoutes = (app: AppKoa) => {
 
   publicRoutes(app);
   privateRoutes(app);
-  adminRoutes(app);
 };
 
 export default defineRoutes;

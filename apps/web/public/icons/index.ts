@@ -1,1 +1,12 @@
-export { default as GoogleIcon } from './google.svg';
+export { default as AddIcon } from './add.svg';
+export { default as ArrowDownIcon } from './arrow_down.svg';
+export { default as CartIcon } from './cart.svg';
+export { default as CheckIcon } from './check.svg';
+export { default as CrossIcon } from './cross.svg';
+export { default as LogoutIcon } from './logout.svg';
+export { default as MinusIcon } from './minus.svg';
+export { default as PlusIcon } from './plus.svg';
+export { default as SwapIcon } from './swap.svg';
+export { default as TrashIcon } from './trash.svg';
+export { default as XIcon } from './x.svg';
+export { default as XCircleIcon } from './XCircle.svg';

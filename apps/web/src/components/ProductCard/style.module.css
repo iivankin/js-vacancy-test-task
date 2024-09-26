@@ -1,0 +1,26 @@
+.img {
+  position: relative;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.delete {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.badge {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  text-transform: none;
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,3 +1,28 @@
+.label {
+  margin-bottom: 8px;
+  color: var(--mantine-color-black-600-text);
+}
+
+.input {
+  border-color: var(--mantine-color-black-100-1);
+  color: var(--mantine-color-black-600-text);
+  caret-color: var(--mantine-color-blue-600-text);
+
+  &:hover,
+  &:focus-within,
+  &:has(input:not(:placeholder-shown)) {
+    border-color: var(--mantine-color-blue-600-1);
+  }
+}
+
+.inputError {
+  border-color: var(--mantine-color-red-6) !important;
+}
+
+.innerInput::placeholder {
+  color: var(--mantine-color-black-300-text);
+}
+
 .error {
   color: var(--mantine-color-red-6);
 }

@@ -15,13 +15,9 @@ import helmet from 'koa-helmet';
 import koaLogger from 'koa-logger';
 import qs from 'koa-qs';
 
-import { socketService } from 'services';
 import routes from 'routes';
 
 import config from 'config';
-
-import ioEmitter from 'io-emitter';
-import redisClient, { redisErrorHandler } from 'redis-client';
 
 import logger from 'logger';
 
@@ -62,16 +58,6 @@ const app = initKoa();
 
 (async () => {
   const server = http.createServer(app.callback());
-
-  if (config.REDIS_URI) {
-    await redisClient
-      .connect()
-      .then(() => {
-        ioEmitter.initClient();
-        socketService(server);
-      })
-      .catch(redisErrorHandler);
-  }
 
   server.listen(config.PORT, () => {
     logger.info(`API server is listening on ${config.PORT} in ${config.APP_ENV} environment`);

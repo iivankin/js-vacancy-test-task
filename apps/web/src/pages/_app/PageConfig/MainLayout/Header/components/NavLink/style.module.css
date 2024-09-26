@@ -1,0 +1,20 @@
+.link {
+  text-decoration: none;
+  z-index: 2;
+
+  div {
+    p {
+      transition: color 150ms ease-in-out;
+    }
+  }
+
+  &:hover div p {
+    color: var(--mantine-color-black-600-text) !important;
+  }
+}
+
+.linkActive div {
+  p {
+    color: var(--mantine-color-black-600-text) !important;
+  }
+}

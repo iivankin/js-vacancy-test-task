@@ -1,0 +1,14 @@
+.content {
+  max-width: 1344px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.root {
+  position: relative;
+}
+
+.indicator {
+  background-color: var(--mantine-color-black-100-1);
+  border-radius: 20px;
+}

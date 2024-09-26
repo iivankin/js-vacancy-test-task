@@ -17,6 +17,15 @@ module.exports = {
 
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pub-60598b7c52b34387840b4e8b2a63336c.r2.dev',
+        pathname: '/images/**',
+      },
+    ],
+  },
   reactStrictMode: true,
   output: 'standalone',
   experimental: {

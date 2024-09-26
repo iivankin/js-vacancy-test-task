@@ -8,12 +8,9 @@ import { useForm } from 'react-hook-form';
 
 import { accountApi } from 'resources/account';
 
-import { GoogleIcon } from 'public/icons';
-
 import { handleApiError } from 'utils';
 
 import { RoutePath } from 'routes';
-import config from 'config';
 
 import { signInSchema } from 'schemas';
 import { SignInParams } from 'types';
@@ -41,16 +38,18 @@ const SignIn: NextPage = () => {
         <title>Sign in</title>
       </Head>
 
-      <Stack w={400} gap={20}>
+      <Stack w={408} gap={32}>
         <Stack gap={32}>
-          <Title order={1}>Sign In</Title>
+          <Title order={2} c="black-600">
+            Sign In
+          </Title>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack gap={20}>
               <TextInput
                 {...register('email')}
                 label="Email Address"
-                placeholder="Enter email address"
+                placeholder="Email Address"
                 error={errors.email?.message}
               />
 
@@ -66,10 +65,6 @@ const SignIn: NextPage = () => {
                   {errors.credentials.message}
                 </Alert>
               )}
-
-              <Anchor component={Link} href={RoutePath.ForgotPassword}>
-                Forgot password?
-              </Anchor>
             </Stack>
 
             <Button type="submit" loading={isSignInPending} fullWidth mt={32}>
@@ -78,23 +73,12 @@ const SignIn: NextPage = () => {
           </form>
         </Stack>
 
-        <Stack gap={32}>
-          <Button
-            component="a"
-            variant="outline"
-            leftSection={<GoogleIcon />}
-            href={`${config.API_URL}/account/sign-in/google/auth`}
-          >
-            Continue with Google
-          </Button>
-
-          <Group justify="center" gap={12}>
-            Don’t have an account?
-            <Anchor component={Link} href={RoutePath.SignUp}>
-              Sign up
-            </Anchor>
-          </Group>
-        </Stack>
+        <Group justify="center" gap={12} c="black-600">
+          Don&apos;t have an account?
+          <Anchor component={Link} href={RoutePath.SignUp} c="blue-400">
+            Sign up
+          </Anchor>
+        </Group>
       </Stack>
     </>
   );

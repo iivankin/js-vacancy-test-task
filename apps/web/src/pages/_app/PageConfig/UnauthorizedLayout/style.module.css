@@ -1,0 +1,8 @@
+.imageContainer {
+  position: relative;
+  border-radius: 12px;
+}
+
+.image {
+  object-fit: contain;
+}

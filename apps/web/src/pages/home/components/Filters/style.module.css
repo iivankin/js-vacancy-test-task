@@ -1,0 +1,23 @@
+.search {
+  height: 48px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.button {
+  all: unset;
+  cursor: pointer;
+  height: 16px;
+  padding-left: 6px;
+  padding-top: 1px;
+}
+
+.badge {
+  border-color: var(--mantine-color-black-100-1);
+  color: var(--mantine-color-black-600-text);
+  background-color: white;
+  padding: 10px 20px;
+  height: 36px;
+  font-size: 14px;
+  line-height: 17px;
+}

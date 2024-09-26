@@ -1,0 +1,20 @@
+.link {
+  text-decoration: none;
+
+  p {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 600;
+    transition: color 150ms ease-in-out;
+  }
+
+  &:hover p {
+    color: var(--mantine-color-black-600-text) !important;
+  }
+}
+
+.linkActive {
+  p {
+    color: var(--mantine-color-black-600-text) !important;
+  }
+}

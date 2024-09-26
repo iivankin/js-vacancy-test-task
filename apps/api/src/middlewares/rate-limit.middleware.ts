@@ -1,10 +1,6 @@
 import { ParameterizedContext } from 'koa';
 import koaRateLimit, { MiddlewareOptions } from 'koa-ratelimit';
 
-import config from 'config';
-
-import redisClient from 'redis-client';
-
 import { AppKoaContextState } from 'types';
 
 const rateLimit = (
@@ -12,19 +8,10 @@ const rateLimit = (
   requestsPerDuration = 10,
   errorMessage: string | undefined = 'Looks like you are moving too fast. Retry again in few minutes.',
 ): ReturnType<typeof koaRateLimit> => {
-  const isRedisAvailable = !!config.REDIS_URI;
-
-  let dbOptions: Pick<MiddlewareOptions, 'driver' | 'db'> = {
+  const dbOptions: Pick<MiddlewareOptions, 'driver' | 'db'> = {
     driver: 'memory',
     db: new Map(),
   };
-
-  if (isRedisAvailable) {
-    dbOptions = {
-      driver: 'redis',
-      db: redisClient,
-    };
-  }
 
   return koaRateLimit({
     ...dbOptions,

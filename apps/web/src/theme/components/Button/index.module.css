@@ -1,10 +1,45 @@
 .label {
   font-weight: 500;
+  font-size: 14px;
 }
 
 .root {
+  transition:
+    background-color,
+    color,
+    border-color 150ms ease-in-out;
+  height: 40px;
+}
+
+.rootMain {
+  &:hover {
+    background-color: var(--mantine-color-blue-500-1);
+  }
+
+  &:active {
+    background-color: var(--mantine-color-blue-700-1);
+  }
+
   &:disabled,
   &[data-disabled] {
-    background-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    background-color: #72a5f4;
+    color: white;
+  }
+}
+
+.rootOutline {
+  color: var(--mantine-color-black-400-text);
+  border-color: var(--mantine-color-black-200-1);
+
+  &:hover {
+    background-color: transparent;
+    color: var(--mantine-color-blue-600-text);
+    border-color: var(--mantine-color-blue-500-1);
+  }
+
+  &:active {
+    background-color: transparent;
+    color: var(--mantine-color-blue-700-text);
+    border-color: var(--mantine-color-blue-500-1);
   }
 }

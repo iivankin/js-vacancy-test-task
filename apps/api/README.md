@@ -52,8 +52,3 @@ You can start the application in two ways:
 
 - **Request Validation**: Simplified request data validation and sanitization with [Zod](https://zod.dev/).
 - **Database**: Configuration for MongoDB, including migrations.
-
-### Communication and Scheduling
-
-- **WebSocket**: Integrated WebSocket server using [socket.io](https://socket.io/).
-- **Scheduler**: Task scheduling based on cron jobs.
